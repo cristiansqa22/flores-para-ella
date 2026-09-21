@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Marcela 🌻❤️</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at center, #3b082d 0%, #170018 55%, #080008 100%);
+      color: #333;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255, 55, 160, 0.45);
+      font-size: 28px;
+      animation: float 8s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      15% { opacity: 1; }
+      to { transform: translateY(-15vh) rotate(25deg); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      width: min(940px, 94vw);
+      min-height: 86vh;
+      margin: 7vh auto;
+      padding: 35px 35px 25px;
+      background: #fff8ed;
+      border-radius: 28px;
+      box-shadow: 0 0 45px rgba(255, 85, 190, 0.25);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(28px, 5vw, 48px);
+      color: #d18b00;
+    }
+
+    .subtitle {
+      margin: 0 0 12px;
+      font-size: clamp(16px, 2.5vw, 22px);
+      color: #654;
+    }
+
+    .message {
+      font-size: clamp(15px, 2.2vw, 20px);
+      line-height: 1.55;
+      max-width: 620px;
+      margin: 10px auto 0;
+    }
+
+    .tree {
+      position: relative;
+      height: 300px;
+      margin-top: 5px;
+    }
+
+    .trunk {
+      position: absolute;
+      width: 38px;
+      height: 145px;
+      background: linear-gradient(90deg, #6b3718, #a45d27, #6b3718);
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 8px 8px 2px 2px;
+    }
+
+    .crown {
+      position: absolute;
+      width: min(500px, 75vw);
+      height: 245px;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+
+    .flower {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      font-size: 23px;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,.2));
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      50% { transform: scale(1.08); }
+    }
+
+    .counter-title {
+      font-size: 17px;
+      margin-top: 3px;
+    }
+
+    #counter {
+      font-weight: bold;
+      color: #9b6200;
+      font-size: clamp(16px, 3vw, 25px);
+      margin-top: 5px;
+    }
+
+    .signature {
+      margin-top: 8px;
+      font-size: 18px;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 24px 15px 18px; min-height: 86vh; }
+      .tree { height: 250px; }
+      .crown { height: 205px; }
+      .trunk { height: 110px; }
+      .flower { font-size: 19px; width: 21px; height: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <main class="card">
+    <h1>🌻 Flores Amarillas para Marcela 🌻</h1>
+    <p class="subtitle">Flores amarillas para el amor de mi vida</p>
+
+    <div class="message">
+      <p>Si pudiera elegir un lugar seguro,<br>
+      sería a tu lado.</p>
+
+      <p>Cuanto más pasa el tiempo,<br>
+      más te amo. ❤️</p>
+
+      <p>— I Love You! —</p>
+    </div>
+
+    <div class="tree">
+      <div class="crown" id="crown"></div>
+      <div class="trunk"></div>
+    </div>
+
+    <div class="counter-title">Mi amor por ti comenzó hace...</div>
+    <div id="counter">Calculando...</div>
+    <div class="signature">Desde el 22 de enero de 2020, para siempre. ❤️</div>
+  </main>
+
+  <script>
+    // Fecha de inicio de la relación: 22 de enero de 2020.
+    // Si recuerdas la hora exacta en que comenzó, puedes cambiar 00:00:00.
+    const inicio = new Date(2020, 0, 22, 0, 0, 0);
+
+    function actualizarContador() {
+      const ahora = new Date();
+      let diferencia = ahora - inicio;
+
+      const totalSegundos = Math.floor(diferencia / 1000);
+      const segundos = totalSegundos % 60;
+      const totalMinutos = Math.floor(totalSegundos / 60);
+      const minutos = totalMinutos % 60;
+      const totalHoras = Math.floor(totalMinutos / 60);
+      const horas = totalHoras % 24;
+      const dias = Math.floor(totalHoras / 24);
+
+      document.getElementById("counter").textContent =
+        `${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos`;
+    }
+
+    function crearFlores() {
+      const crown = document.getElementById("crown");
+      const total = 125;
+
+      // Distribución aproximada de flores formando un corazón.
+      for (let i = 0; i < total; i++) {
+        const t = (Math.PI * 2 * i) / total;
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) -
+                   2 * Math.cos(3*t) - Math.cos(4*t));
+
+        // Variación interna para llenar el corazón.
+        const scale = 0.72 + Math.random() * 0.28;
+        const left = 50 + x * 2.0 * scale;
+        const top = 50 + y * 2.0 * scale;
+
+        const flower = document.createElement("span");
+        flower.className = "flower";
+        flower.textContent = Math.random() > 0.18 ? "🌻" : "🌻";
+        flower.style.left = `${left}%`;
+        flower.style.top = `${top}%`;
+        flower.style.animationDelay = `${Math.random() * 2.5}s`;
+        crown.appendChild(flower);
+      }
+    }
+
+    function crearCorazones() {
+      const container = document.getElementById("hearts");
+      for (let i = 0; i < 22; i++) {
+        const heart = document.createElement("span");
+        heart.className = "heart";
+        heart.textContent = "♡";
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDelay = `${Math.random() * 8}s`;
+        heart.style.fontSize = `${18 + Math.random() * 35}px`;
+        container.appendChild(heart);
+      }
+    }
+
+    crearFlores();
+    crearCorazones();
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+  </script>
+</body>
+</html>
