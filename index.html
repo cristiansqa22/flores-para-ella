@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores Amarillas para Marcela</title>
+    <title>Flores Amarillas para Valeria</title>
     <style>
         * {
             box-sizing: border-box;
@@ -98,12 +98,16 @@
 
 <div class="card">
     <div class="text-container">
-        <h2>Flores Amarillas para el amor de mi vida </h2>
-        <p class="poem">Espero lo resivas con cariño, es estupido que solo de mande esto disculpame.</p>
-        <p class="poem">A pesar de todos los problemas, Te Amo mucho🤍</p>
-        <div class="signature">— TE AMO MUCHO! VIDA 🤍</div>
+        <h2>Flores Amarillas para Valeria 🌻</h2>
+        
+        <!-- MENSAJE PERSONALIZADO -->
+        <p class="poem">Me tocó hacerle una flor virtual, ya que está por allá lejos pasándola bien con su novio jajaja.</p>
+        <p class="poem">No sé si nos volvamos a ver ni tampoco lo que llegue a pasar, pero estos son los días que faltan para ir al pueblo.</p>
+        
+        <div class="signature">— ¡Con cariño! 🌻</div>
 
-        <div class="timer-title">Mi amor por ti comenzó hace... 🌻</div>
+        <!-- TÍTULO DEL CONTADOR EN CUENTA REGRESIVA -->
+        <div class="timer-title">Dias para volver a vernos: 🌻</div>
         <div class="timer" id="timer">Cargando tiempo...</div>
     </div>
     <div class="canvas-container">
@@ -112,12 +116,18 @@
 </div>
 
 <script>
-    // CONFIGURACIÓN DE LA FECHA INICIAL: 22 DE ENERO DE 2020 (0 = Enero)
-    const fechaInicio = new Date(2020, 0, 22, 0, 0, 0);
+    // FECHA OBJETIVO DE LLEGADA AL PUEBLO: 24 DE DICIEMBRE DE 2026
+    // Mes 11 representa Diciembre en Javascript (0 = Enero, 11 = Diciembre)
+    const fechaMeta = new Date(2026, 11, 24, 0, 0, 0); 
 
     function actualizarContador() {
         const ahora = new Date();
-        const diferencia = ahora - fechaInicio;
+        const diferencia = fechaMeta - ahora;
+
+        if (diferencia <= 0) {
+            document.getElementById('timer').innerHTML = "¡Llegó el día de ir al pueblo! 🎉";
+            return;
+        }
 
         const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
         const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
@@ -128,7 +138,6 @@
             `${dias} días ${horas.toString().padStart(2, '0')} horas ${minutos.toString().padStart(2, '0')} minutos ${segundos.toString().padStart(2, '0')} segundos`;
     }
 
-    // Se actualiza en tiempo real cada 1 segundo (aumentando continuamente)
     setInterval(actualizarContador, 1000);
     actualizarContador();
 
@@ -158,14 +167,11 @@
         ctx.restore();
     }
 
-    // Puntos con forma de corazón para la copa del árbol
     const flowers = [];
     for (let t = 0; t < Math.PI * 2; t += 0.05) {
-        // Ecuación paramétrica de corazón
         let x = 16 * Math.pow(Math.sin(t), 3);
         let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
 
-        // Escalar y centrar en canvas
         for (let r = 0.2; r <= 1; r += 0.2) {
             flowers.push({
                 x: 200 + x * 9 * r + (Math.random() * 15 - 7.5),
@@ -176,7 +182,6 @@
         }
     }
 
-    // Tronco
     function drawTrunk() {
         ctx.beginPath();
         ctx.moveTo(185, 420);
@@ -186,7 +191,6 @@
         ctx.fillStyle = '#5c3a21';
         ctx.fill();
 
-        // Rama izquierda
         ctx.beginPath();
         ctx.moveTo(185, 250);
         ctx.quadraticCurveTo(150, 210, 130, 190);
@@ -194,7 +198,6 @@
         ctx.strokeStyle = '#5c3a21';
         ctx.stroke();
 
-        // Rama derecha
         ctx.beginPath();
         ctx.moveTo(215, 250);
         ctx.quadraticCurveTo(250, 210, 270, 190);
@@ -203,7 +206,6 @@
         ctx.stroke();
     }
 
-    // Hojas/girasoles cayendo
     const fallingPetals = [];
     for(let i = 0; i < 25; i++) {
         fallingPetals.push({
@@ -219,7 +221,6 @@
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Suelo
         ctx.beginPath();
         ctx.moveTo(0, 415);
         ctx.lineTo(400, 415);
@@ -229,7 +230,6 @@
 
         drawTrunk();
 
-        // Aparecer flores paulatinamente
         if (progress < flowers.length) {
             progress += 3;
         }
@@ -238,7 +238,6 @@
             drawSunflower(flowers[i].x, flowers[i].y, flowers[i].size);
         }
 
-        // Animación de girasoles cayendo
         fallingPetals.forEach(p => {
             drawSunflower(p.x, p.y, p.size);
             p.y += p.speedY;
