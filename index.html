@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores Amarillas para Valeria</title>
+    <title>Flores Amarillas para Marcela</title>
     <style>
         * {
             box-sizing: border-box;
@@ -96,163 +96,164 @@
 </head>
 <body>
 
-<div class="card">
-    <div class="text-container">
-        <h2>Flores Amarillas para Valeria 🌻</h2>
-        
-        <!-- MENSAJE PERSONALIZADO -->
-        <p class="poem">Me tocó hacerle una flor virtual, ya que está por allá lejos pasándola bien con su novio jajaja.</p>
-        <p class="poem">No sé si nos volvamos a ver ni tampoco lo que llegue a pasar, pero estos son los días que faltan para ir al pueblo.</p>
-        
-        <div class="signature">— ¡Con cariño! 🌻</div>
+    <div class="card">
+        <div class="text-container">
+            <h2>Flores Amarillas para el amor de mi vida </h2>
+            <p class="poem">Espero lo resivas con cariño, es estupido que solo de mande esto disculpame.</p>
+            <p class="poem">A pesar de todos los problemas, Te Amo mucho🤍</p>
+            <div class="signature">TE AMO MUCHO! VIDA 🤍</div>
 
-        <!-- TÍTULO DEL CONTADOR EN CUENTA REGRESIVA -->
-        <div class="timer-title">Dias para volver a vernos: 🌻</div>
-        <div class="timer" id="timer">Cargando tiempo...</div>
+            <div class="timer-title">Mi amor por ti comenzó hace... 🌻</div>
+            <div class="timer" id="timer">Cargando tiempo...</div>
+        </div>
+        <div class="canvas-container">
+            <canvas id="treeCanvas" width="400" height="420"></canvas>
+        </div>
     </div>
-    <div class="canvas-container">
-        <canvas id="treeCanvas" width="400" height="420"></canvas>
-    </div>
-</div>
 
-<script>
-    // FECHA OBJETIVO DE LLEGADA AL PUEBLO: 24 DE DICIEMBRE DE 2026
-    // Mes 11 representa Diciembre en Javascript (0 = Enero, 11 = Diciembre)
-    const fechaMeta = new Date(2026, 11, 24, 0, 0, 0); 
+    <script>
+        // CONFIGURACIÓN DE LA FECHA INICIAL: 22 DE ENERO DE 2020 (0 = Enero)
+        const fechaInicio = new Date(2020, 0, 22, 0, 0, 0); 
 
-    function actualizarContador() {
-        const ahora = new Date();
-        const diferencia = fechaMeta - ahora;
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
 
-        if (diferencia <= 0) {
-            document.getElementById('timer').innerHTML = "¡Llegó el día de ir al pueblo! 🎉";
-            return;
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+            const segundos = Math.floor((diferencia / 1000) % 60);
+
+            document.getElementById('timer').innerHTML = 
+                `${dias} días ${horas.toString().padStart(2, '0')} horas ${minutos.toString().padStart(2, '0')} minutos ${segundos.toString().padStart(2, '0')} segundos`;
         }
 
-        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
-        const segundos = Math.floor((diferencia / 1000) % 60);
+        // Se actualiza en tiempo real cada 1 segundo (aumentando continuamente)
+        setInterval(actualizarContador, 1000);
+        actualizarContador();
 
-        document.getElementById('timer').innerHTML =
-            `${dias} días ${horas.toString().padStart(2, '0')} horas ${minutos.toString().padStart(2, '0')} minutos ${segundos.toString().padStart(2, '0')} segundos`;
-    }
+        // ANIMACIÓN DEL ÁRBOL EN CANVAS
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
 
-    setInterval(actualizarContador, 1000);
-    actualizarContador();
+        function drawSunflower(x, y, radius) {
+            ctx.save();
+            ctx.translate(x, y);
+            
+            // Pétalos amarillos
+            ctx.fillStyle = '#fbbf24';
+            const petals = 10;
+            for (let i = 0; i < petals; i++) {
+                ctx.beginPath();
+                ctx.rotate((Math.PI * 2) / petals);
+                ctx.ellipse(0, radius, radius / 2.5, radius, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
 
-    // ANIMACIÓN DEL ÁRBOL EN CANVAS
-    const canvas = document.getElementById('treeCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function drawSunflower(x, y, radius) {
-        ctx.save();
-        ctx.translate(x, y);
-
-        // Pétalos amarillos
-        ctx.fillStyle = '#fbbf24';
-        const petals = 10;
-        for (let i = 0; i < petals; i++) {
+            // Centro café del girasol
             ctx.beginPath();
-            ctx.rotate((Math.PI * 2) / petals);
-            ctx.ellipse(0, radius, radius / 2.5, radius, 0, 0, Math.PI * 2);
+            ctx.arc(0, 0, radius * 0.7, 0, Math.PI * 2);
+            ctx.fillStyle = '#78350f';
             ctx.fill();
+            ctx.restore();
         }
 
-        // Centro café del girasol
-        ctx.beginPath();
-        ctx.arc(0, 0, radius * 0.7, 0, Math.PI * 2);
-        ctx.fillStyle = '#78350f';
-        ctx.fill();
-        ctx.restore();
-    }
+        // Puntos con forma de corazón para la copa del árbol
+        const flowers = [];
+        for (let t = 0; t < Math.PI * 2; t += 0.05) {
+            // Ecuación paramétrica de corazón
+            let x = 16 * Math.pow(Math.sin(t), 3);
+            let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+            
+            // Escalar y centrar en canvas
+            for (let r = 0.2; r <= 1; r += 0.2) {
+                flowers.push({
+                    x: 200 + x * 9 * r + (Math.random() * 15 - 7.5),
+                    y: 160 + y * 9 * r + (Math.random() * 15 - 7.5),
+                    size: 5 + Math.random() * 4,
+                    alpha: 0
+                });
+            }
+        }
 
-    const flowers = [];
-    for (let t = 0; t < Math.PI * 2; t += 0.05) {
-        let x = 16 * Math.pow(Math.sin(t), 3);
-        let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+        // Tronco
+        function drawTrunk() {
+            ctx.beginPath();
+            ctx.moveTo(185, 420);
+            ctx.quadraticCurveTo(195, 280, 175, 220);
+            ctx.lineTo(225, 220);
+            ctx.quadraticCurveTo(205, 280, 215, 420);
+            ctx.fillStyle = '#5c3a21';
+            ctx.fill();
 
-        for (let r = 0.2; r <= 1; r += 0.2) {
-            flowers.push({
-                x: 200 + x * 9 * r + (Math.random() * 15 - 7.5),
-                y: 160 + y * 9 * r + (Math.random() * 15 - 7.5),
-                size: 5 + Math.random() * 4,
-                alpha: 0
+            // Rama izquierda
+            ctx.beginPath();
+            ctx.moveTo(185, 250);
+            ctx.quadraticCurveTo(150, 210, 130, 190);
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = '#5c3a21';
+            ctx.stroke();
+
+            // Rama derecha
+            ctx.beginPath();
+            ctx.moveTo(215, 250);
+            ctx.quadraticCurveTo(250, 210, 270, 190);
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = '#5c3a21';
+            ctx.stroke();
+        }
+
+        // Hojas/girasoles cayendo
+        const fallingPetals = [];
+        for(let i = 0; i < 25; i++) {
+            fallingPetals.push({
+                x: 100 + Math.random() * 200,
+                y: 100 + Math.random() * 250,
+                speedY: 0.5 + Math.random() * 0.8,
+                speedX: Math.sin(Math.random()) * 0.5,
+                size: 4 + Math.random() * 3
             });
         }
-    }
 
-    function drawTrunk() {
-        ctx.beginPath();
-        ctx.moveTo(185, 420);
-        ctx.quadraticCurveTo(195, 280, 175, 220);
-        ctx.lineTo(225, 220);
-        ctx.quadraticCurveTo(205, 280, 215, 420);
-        ctx.fillStyle = '#5c3a21';
-        ctx.fill();
+        let progress = 0;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Suelo
+            ctx.beginPath();
+            ctx.moveTo(0, 415);
+            ctx.lineTo(400, 415);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
 
-        ctx.beginPath();
-        ctx.moveTo(185, 250);
-        ctx.quadraticCurveTo(150, 210, 130, 190);
-        ctx.lineWidth = 8;
-        ctx.strokeStyle = '#5c3a21';
-        ctx.stroke();
+            drawTrunk();
 
-        ctx.beginPath();
-        ctx.moveTo(215, 250);
-        ctx.quadraticCurveTo(250, 210, 270, 190);
-        ctx.lineWidth = 8;
-        ctx.strokeStyle = '#5c3a21';
-        ctx.stroke();
-    }
-
-    const fallingPetals = [];
-    for(let i = 0; i < 25; i++) {
-        fallingPetals.push({
-            x: 100 + Math.random() * 200,
-            y: 100 + Math.random() * 250,
-            speedY: 0.5 + Math.random() * 0.8,
-            speedX: Math.sin(Math.random()) * 0.5,
-            size: 4 + Math.random() * 3
-        });
-    }
-
-    let progress = 0;
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ctx.beginPath();
-        ctx.moveTo(0, 415);
-        ctx.lineTo(400, 415);
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#333';
-        ctx.stroke();
-
-        drawTrunk();
-
-        if (progress < flowers.length) {
-            progress += 3;
-        }
-
-        for (let i = 0; i < progress && i < flowers.length; i++) {
-            drawSunflower(flowers[i].x, flowers[i].y, flowers[i].size);
-        }
-
-        fallingPetals.forEach(p => {
-            drawSunflower(p.x, p.y, p.size);
-            p.y += p.speedY;
-            p.x += Math.sin(p.y * 0.02) * 0.5;
-
-            if (p.y > 410) {
-                p.y = 120 + Math.random() * 50;
-                p.x = 120 + Math.random() * 160;
+            // Aparecer flores paulatinamente
+            if (progress < flowers.length) {
+                progress += 3;
             }
-        });
 
-        requestAnimationFrame(animate);
-    }
+            for (let i = 0; i < progress && i < flowers.length; i++) {
+                drawSunflower(flowers[i].x, flowers[i].y, flowers[i].size);
+            }
 
-    animate();
-</script>
+            // Animación de girasoles cayendo
+            fallingPetals.forEach(p => {
+                drawSunflower(p.x, p.y, p.size);
+                p.y += p.speedY;
+                p.x += Math.sin(p.y * 0.02) * 0.5;
+
+                if (p.y > 410) {
+                    p.y = 120 + Math.random() * 50;
+                    p.x = 120 + Math.random() * 160;
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 </body>
 </html>
